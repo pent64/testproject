@@ -1,2 +1,6 @@
 <?php
-echo 222;
+include_once ('system/Router.php');
+
+use \Test\Router\Router;
+
+$router = new Router();
