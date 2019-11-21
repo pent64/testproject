@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: db
+    volumes:
+      - ./mysql-dump:/docker-entrypoint-initdb.d
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+
+  example:
+    depends_on:
+      - db
+    image: wordpress:php7.2
+    container_name: example
+    ports:
+      - "1234:80"
+    restart: always
+    links:
+      - db:mysql
+    volumes:
+      - ./:/var/www/html
